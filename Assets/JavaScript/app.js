@@ -5,57 +5,87 @@ $(document).ready(function(){
         });
 
 
-
 var wins = 0;
 var losses= 0;
-var seconds = 10;
+var seconds = 59;
 
 var x = 0
 var timer; 
 
 
 
-        $(document).on('click', '#gamestart', function(gamestart, startTimer){
+        $(document).on('click', '#gamestart', function gamestart (startTimer){
                 $('#gamestart').hide();
+                $('#gameover').hide();
                 $('#divfour').text("00:" + seconds);
                         timer = setInterval(startTimer, 1000);
-
- 
+                        
                 $('#question').text(question[x].question);
                 $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
                 $('#answerB').text(question[x].B[0]).addClass((question[x].B[1]));
                 $('#answerC').text(question[x].C[0]).addClass((question[x].C[1]));
                 $('#answerD').text(question[x].D[0]).addClass((question[x].D[1]));
+                        
 
-                        $(document).on('click','.answerbox', function(){
 
-                                console.log($(this)[0].classList[1]);
+
+        $(document).on('click','.answerbox', function(){
 
                         if ($(this)[0].classList[1] == "wrong") {
-                                        $('.wrong').addClass('looser');
-                                        $('.correct').addClass('winner');
-                                        losses++
-                                        $('#divsix').text(losses);
-                                        x++
+                                losses++
+                                $('#divsix').text(losses);
+
+                                $('.wrong').addClass('looser');
+                                setTimeout(function () { 
+                                        $('.wrong').removeClass('looser wrong');}, 1500);
+                                $('.correct').addClass('winner');
+                                setTimeout(function () { 
+                                        $('.correct').removeClass('winner correct');}, 1500);
+                                        x++ 
+                                setTimeout(function() {
+                                
+                                $('#question').text(question[x].question);
+                                $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
+                                $('#answerB').text(question[x].B[0]).addClass((question[x].B[1]));
+                                $('#answerC').text(question[x].C[0]).addClass((question[x].C[1]));
+                                $('#answerD').text(question[x].D[0]).addClass((question[x].D[1]));
+                                ;}, 1500);
+                                
+
                         }
 
                         if ($(this)[0].classList[1] == "correct") {
-                                        $('.correct').addClass('winner');
-                                        wins++
-                                        $('#divtwo').text(wins);
-                                        x++
-                                        seconds=(seconds+5)
+                                wins++
+                                
+                                $('.wrong').addClass('looser');
+                                setTimeout(function () { 
+                                        $('.wrong').removeClass('looser wrong');}, 1500);
+                                
+                                $('.correct').addClass('winner');
+                                setTimeout(function () { 
+                                        $('.correct').removeClass('winner correct');}, 1500);
+                                
+                                $('#divtwo').text(wins);
+                                seconds=(seconds+5)
 
+                                x++ 
+                                setTimeout(function() {
+                                       
+                                
+                                $('#question').text(question[x].question);
+                                $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
+                                $('#answerB').text(question[x].B[0]).addClass((question[x].B[1]));
+                                $('#answerC').text(question[x].C[0]).addClass((question[x].C[1]));
+                                $('#answerD').text(question[x].D[0]).addClass((question[x].D[1]));
+                                ;}, 1500);
+                                debugger;
                                         
                         }
 
                         console.log(x);
-                        }) 
-
+                        });
                 
-                
-
-
+        
                 function startTimer(){
                         seconds--;
                         $('#divfour').text("00:" + seconds);
@@ -66,16 +96,30 @@ var timer;
 
                         if (seconds === 0) {
                                 clearInterval(timer)
-                                $('#gamefrost').html('<img id="gameover" src="Assets/Images/gameover.jpg">');
+                                $('#gamefrost').html('<img id = "gameover" src="Assets/Images/gameover.jpg">')
+                                $('#topbar').html('<img id = "replay" src = "Assets/Images/replay.png">')
+                    
                         }
                 }
 
+                $(document).on('click','#replay', function() {
+                        var wins = 0;
+                        var losses= 0;
+                        var seconds = 2;
+        
+                        var x = 0
+                        var timer; 
+        
+                        gamestart()
+                });
+
+
+
         });
 
-
-
-
-
+        
+        
+       
 
 
 
@@ -108,7 +152,7 @@ var question = [
         },
 
         {
-        question: "Which one of these animals is classified as a “marine mammal?",
+        question: "Which one of these animals is classified as a marine mammal?",
         A: ["Polar Bear","correct"], B: ["River Otter","wrong"], C: ["Beaver","wrong"], D: ["Moose","wrong"]
         },
 
@@ -134,14 +178,19 @@ var question = [
 
         {
         question: "Which of these eared seals can be found along the entire west coast of the United States (Washington to Southern California?",
-        A: ["Guadalupe Fur Seal","wrong"], B: ["Galápagos Sea Lion","wrong"], C: ["California Sea Lion","correct"], D: ["Galapagos Fur Seal","wrong"]
+        A: ["Guadalupe Fur Seal","wrong"], B: ["Galapagos Sea Lion","wrong"], C: ["California Sea Lion","correct"], D: ["Galapagos Fur Seal","wrong"]
         },
 
         {
         question: "Which marine mammal can swim the fastest?",
         A: ["Killer Whale","correct"], B: ["Manatee","wrong"], C: ["Gray Whale","wrong"], D: ["Bottlenose Dolphin","wrong"]
         },
-        ]
+
+        {
+        question: "YOU ARE TOO GOOD! I ran out of question for you!",
+        A: ["I am de best","correct"], B: ["This game is lame","wrong"], C: ["I dont like seals","wrong"], D: ["turtles","wrong"]
+        },
+]
 
 
 
