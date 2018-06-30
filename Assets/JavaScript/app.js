@@ -7,25 +7,22 @@ $(document).ready(function(){
 
 var wins = 0;
 var losses= 0;
-var seconds = 59;
+var seconds = 30;
 
 var x = 0
 var timer; 
 
-
-
-        $(document).on('click', '#gamestart', function gamestart (startTimer){
-                $('#gamestart').hide();
-                $('#gameover').hide();
-                $('#divfour').text("00:" + seconds);
-                        timer = setInterval(startTimer, 1000);
-                        
-                $('#question').text(question[x].question);
-                $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
-                $('#answerB').text(question[x].B[0]).addClass((question[x].B[1]));
-                $('#answerC').text(question[x].C[0]).addClass((question[x].C[1]));
-                $('#answerD').text(question[x].D[0]).addClass((question[x].D[1]));
-                        
+function gameStart () {
+        $('#gamestart').hide();
+        $('#divfour').text("00:" + seconds);
+                timer = setInterval(startTimer, 1000);
+                
+        $('#question').text(question[x].question);
+        $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
+        $('#answerB').text(question[x].B[0]).addClass((question[x].B[1]));
+        $('#answerC').text(question[x].C[0]).addClass((question[x].C[1]));
+        $('#answerD').text(question[x].D[0]).addClass((question[x].D[1]));
+                
 
 
 
@@ -70,7 +67,7 @@ var timer;
 
                                 x++ 
                                 setTimeout(function() {
-                                       
+                                
                                 
                                 $('#question').text(question[x].question);
                                 $('#answerA').text(question[x].A[0]).addClass((question[x].A[1]));
@@ -85,7 +82,7 @@ var timer;
                         console.log(x);
                         });
                 
-        
+
                 function startTimer(){
                         seconds--;
                         $('#divfour').text("00:" + seconds);
@@ -96,27 +93,31 @@ var timer;
 
                         if (seconds === 0) {
                                 clearInterval(timer)
-                                $('#gamefrost').html('<img id = "gameover" src="Assets/Images/gameover.jpg">')
-                                $('#topbar').html('<img id = "replay" src = "Assets/Images/replay.png">')
-                    
+                                $('#question').html('<img id = "gameover" src="Assets/Images/gameover.jpg">').addClass('clearstyle');
+                                $('#topbar').html('<img id = "replay" src = "Assets/Images/replay.png">');
+                
                         }
                 }
 
-                $(document).on('click','#replay', function() {
-                        var wins = 0;
-                        var losses= 0;
-                        var seconds = 2;
-        
-                        var x = 0
-                        var timer; 
-        
-                        gamestart()
-                });
+                
+}
 
+        $(document).on('click', '#gamestart', gameStart);
 
+        $(document).on('click','#replay', function() {
+                        wins = 0;
+                        losses= 0;
+                        seconds = 30;
+        
+                        x = 0
+                        timer; 
+                       $('#topbar').html('<h1> Marine Mammal Trivia </h1>');
+                        gameStart ()
+
+        
+                        
 
         });
-
         
         
        
